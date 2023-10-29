@@ -31,7 +31,15 @@ const getStyleLoaders = (proProcessor) => {
         },
       }
     },
-    proProcessor,
+    proProcessor && {
+      loader: proProcessor,
+      options: proProcessor === "sass-loader" 
+      ? {
+          // 自定义主题：自动引入我们定义的scss文件
+          additionalData: `@use "@/styles/element/index.scss" as *;`,
+        }
+      : {}
+    },
   ].filter(Boolean) // 如果没有就过滤掉
 }
 
@@ -209,6 +217,10 @@ module.exports = {
   // webpack解析模块加载选项
   resolve: {
     extensions: [".vue", ".js", ".json"], // 自动补全文件扩展名，让vue可以使用
+    alias: {
+      // 路径别名
+      "@": path.resolve(__dirname, "../src"),
+    }
   },
   // 开发服务器 开发环境配置 自动编译
   devServer: {

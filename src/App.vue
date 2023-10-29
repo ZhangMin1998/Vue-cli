@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="title">hello Vue-cli vue2</h1>
-    <el-button type="success">btn</el-button>
+    <el-button>btn</el-button>
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
