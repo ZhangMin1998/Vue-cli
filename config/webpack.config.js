@@ -7,6 +7,9 @@ const TerserWebpackPlugin = require("terser-webpack-plugin")
 const CopyPlugin = require("copy-webpack-plugin")
 const { VueLoaderPlugin } = require('vue-loader')
 const { DefinePlugin } = require("webpack")
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 
 // 需要通过 cross-env 定义环境变量
@@ -147,6 +150,17 @@ module.exports = {
     new DefinePlugin({
       __VUE_OPTIONS_API__: "true",
       __VUE_PROD_DEVTOOLS__: "false",
+    }),
+    // 按需加载element-plus组件样式
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: "sass", // 自定义主题
+        }),
+      ],
     })
   ].filter(Boolean),
   optimization: {

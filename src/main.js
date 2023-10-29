@@ -1,16 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 // import router from './router' // .use(router)
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
-createApp(App).mount(document.getElementById('app'))
-
-
-// import Vue from 'vue'
-// import App from './App.vue'
-// import router from './router'
-
-// new Vue({
-//   el: '#app',
-//   router,
-//   render: h => h(App)
-// })
+createApp(App).use(ElementPlus).mount(document.getElementById('app'))
