@@ -89,7 +89,14 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+          // 开启缓存
+          cacheDirectory: path.resolve(
+            __dirname,
+            "node_modules/.cache/vue-loader"
+          ),
+        }
       }
     ]
   },

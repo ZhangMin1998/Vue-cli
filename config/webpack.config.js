@@ -109,7 +109,14 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+          // 开启缓存
+          cacheDirectory: path.resolve(
+            __dirname,
+            "node_modules/.cache/vue-loader"
+          ),
+        }
       }
     ]
   },
@@ -174,7 +181,33 @@ module.exports = {
   optimization: {
     // 代码分割配置
     splitChunks: {
-      chunks: "all"
+      chunks: "all",
+      cacheGroups: {
+        // 如果项目中没有，请删除
+        // layouts: {
+        //   name: "layouts",
+        //   test: path.resolve(__dirname, "../src/layouts"),
+        //   priority: 40,
+        // }
+        // 将vue相关的库单独打包，减少node_modules的chunk体积。
+        vue: {
+          name: "vue",
+          test: /[\\/]node_modules[\\/]vue(.*)[\\/]/,
+          chunks: "vue-chunk",
+          priority: 30,
+        },
+        elementPlus: {
+          name: "chunk-elementPlus",
+          test: /[\\/]node_modules[\\/]_?element-plus(.*)/,
+          priority: 20,
+        },
+        libs: {
+          name: "chunk-libs",
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10, // 权重最低，优先考虑前面内容
+          chunks: "initial",
+        }
+      }
     },
     // 提取runtime文件 将 hash 值单独保管在一个 runtime 文件中
     runtimeChunk: {
